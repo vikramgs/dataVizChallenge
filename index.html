@@ -302,68 +302,108 @@ First few rows of 2010 data:
 </div>
 </div>
 <p><strong>Answer:</strong></p>
-<div id="247fe148" class="cell" data-execution_count="3">
+<div id="3c6bbaa0" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total games in 2010: </span><span class="sc">{</span><span class="bu">len</span>(df2010)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total games in 2021: </span><span class="sc">{</span><span class="bu">len</span>(df2021)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total games across both seasons: </span><span class="sc">{</span><span class="bu">len</span>(df2010) <span class="op">+</span> <span class="bu">len</span>(df2021)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2010 data shape:"</span>, df2010.shape)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2021 data shape:"</span>, df2021.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2021 data shape:"</span>, df2021.shape)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">2010 data columns:"</span>, df2010.columns.tolist())</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">First few rows of 2010 data:"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df2010.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Total games in 2010: 2430
 Total games in 2021: 2429
 Total games across both seasons: 4859
 2010 data shape: (2430, 7)
-2021 data shape: (2429, 7)</code></pre>
+2021 data shape: (2429, 7)
+
+2010 data columns: ['date', 'visiting', 'home', 'visScore', 'homeScore', 'visHR', 'homeHR']
+
+First few rows of 2010 data:
+       date visiting home  visScore  homeScore  visHR  homeHR
+0  20100404      NYA  BOS         7          9      2       1
+1  20100405      MIN  ANA         3          6      1       3
+2  20100405      CLE  CHA         0          6      0       2
+3  20100405      DET  KCA         8          4      0       1
+4  20100405      SEA  OAK         5          3      1       0</code></pre>
 </div>
 </div>
 <ul>
-<li>We aggregate individual games into stadium averages before we start the visualization process because it is easier to visualize and compare the data when it is aggregated.</li>
+<li>There are total of 4859 games from 2010 and 2021 seasons. 2430 games in 2010 and 2429 games in 2021.</li>
+</ul>
+<div id="3153a10d" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>home_run_2010 <span class="op">=</span> df2010.groupby(<span class="st">'home'</span>).size().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(home_run_2010.head(<span class="dv">3</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>home_run_2021 <span class="op">=</span> df2021.groupby(<span class="st">'home'</span>).size().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(home_run_2021.head(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>home
+ANA    81
+ARI    81
+TOR    81
+dtype: int64
+home
+ANA    81
+ARI    81
+TOR    81
+dtype: int64</code></pre>
+</div>
+</div>
+<ul>
+<li><p>We aggregate individual games into stadium averages before we start the visualization process because it is easier to visualize and compare the data when it is aggregated.Aggregating the data into stadium averages allows us to see the average number of runs and home runs scored by each stadium in a given year. This is helpful because it allows us to compare the performance of different stadiums and see which stadium is the most run-friendly.</p>
+<ul>
+<li>Reduces noise</li>
+<li>Shows true pattern</li>
+<li>Cleaner Data and Visualization</li>
+</ul></li>
 </ul>
 </section>
 <section id="stage-3-structuring-of-visual-mappings" class="level2">
 <h2 class="anchored" data-anchor-id="stage-3-structuring-of-visual-mappings">Stage 3: Structuring of Visual Mappings</h2>
 <p><strong>Mental Model:</strong> Choose the right geometry and aesthetics to effectively communicate your message.</p>
 <p>Let’s explore different visual approaches:</p>
-<div id="cell-stage-3-mapping-exploration" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 3: Structuring of Visual Mappings</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore different geometries and aesthetics</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort data for better visualization</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>avgDF_2010_sorted <span class="op">=</span> avgDF_2010.sort_values(<span class="st">'totalRuns'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure with subplots to compare approaches</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 1: Scatter plot (not ideal for categorical data)</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].scatter(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">"Approach 1: Scatter Plot"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_ylabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 2: Horizontal bar chart (better for categorical data)</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">"Approach 2: Horizontal Bar Chart"</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_ylabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 3: Vertical bar chart</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].bar(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">"Approach 3: Vertical Bar Chart"</span>)</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_ylabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 4: Highlight Colorado</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>colorado_colors <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors)</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">"Approach 4: Highlight Colorado"</span>)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_ylabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-stage-3-mapping-exploration" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 3: Structuring of Visual Mappings</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore different geometries and aesthetics</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort data for better visualization</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>avgDF_2010_sorted <span class="op">=</span> avgDF_2010.sort_values(<span class="st">'totalRuns'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure with subplots to compare approaches</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 1: Scatter plot (not ideal for categorical data)</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].scatter(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">"Approach 1: Scatter Plot"</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Stadium"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_ylabel(<span class="st">"Average Runs"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 2: Horizontal bar chart (better for categorical data)</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">"Approach 2: Horizontal Bar Chart"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Average Runs"</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_ylabel(<span class="st">"Stadium"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 3: Vertical bar chart</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].bar(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">"Approach 3: Vertical Bar Chart"</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Stadium"</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_ylabel(<span class="st">"Average Runs"</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 4: Highlight Colorado</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>colorado_colors <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">"Approach 4: Highlight Colorado"</span>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Average Runs"</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_ylabel(<span class="st">"Stadium"</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -387,67 +427,76 @@ Total games across both seasons: 4859
 </div>
 </div>
 <p><strong>Answer: Question 1: Geometry Choices</strong> - The horizontal bar chart is better than a scatter plot for this data because it is easier to compare the data when it is in a horizontal bar chart. - The vertical bar chart is better than the horizontal bar chart when the data is categorical.</p>
-<p><strong>Answer: Question 2: Aesthetic Mappings</strong> - The color highlighting in Approach 4 accomplishes the goal of highlighting Colorado because it is the only stadium that is highlighted. - The position (x/y) is better than the color for encoding data because it is easier to compare the data when it is in a horizontal bar chart.</p>
+<ul>
+<li>In this case A horizontal bar chart is better than a scatter plot for this data because it allows us to see the average number of runs and home runs scored by each stadium in a given year. * This is helpful because it allows us to compare the performance of different stadiums and see which stadium is the most run-friendly.</li>
+<li>A vertical bar chart is better than a horizontal bar chart for this data because it allows us to see the average number of runs and home runs scored by each stadium in a given year.</li>
+<li>This is helpful because it allows us to compare the performance of different stadiums and see which stadium is the most run-friendly.</li>
+</ul>
+<p><strong>Answer: Question 2: Aesthetic Mappings</strong> - The color highlighting in Approach 4 accomplishes the goal of highlighting Colorado because it is the only stadium that is highlighted.</p>
+<ul>
+<li>The position (x/y) is better than the color for encoding data because it is easier to compare the data when it is in a horizontal bar chart.</li>
+<li>In our case the position (x/y) is better than color for encoding data because it allows us to see the average number of runs and home runs scored by each stadium in a given year. This is helpful because it allows us to compare the performance of different stadiums and see which stadium is the most run-friendly.</li>
+</ul>
 </section>
 <section id="stage-4-formatting-for-your-audience" class="level2">
 <h2 class="anchored" data-anchor-id="stage-4-formatting-for-your-audience">Stage 4: Formatting for Your Audience</h2>
 <p><strong>Mental Model:</strong> Polish your visualization for professional presentation.</p>
 <p>Let’s create a publication-ready visualization:</p>
-<div id="cell-stage-4-formatting" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 4: Formatting for Your Audience</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a professional, publication-ready visualization</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set style for professional appearance</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the main visualization</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create color array for highlighting Colorado</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>colorado_colors <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create horizontal bar chart</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Add title and labels</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Colorado (COL) is the Most Run-Friendly Ballpark in 2010"</span>, </span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>colorado_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, label<span class="op">=</span><span class="st">"Colorado Rockies"</span>)</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>other_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"lightgrey"</span>, label<span class="op">=</span><span class="st">"Other Stadiums"</span>)</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[colorado_bar, other_bar], loc<span class="op">=</span><span class="st">'lower right'</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Add annotation for Colorado</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>colorado_index <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>].index[<span class="dv">0</span>]</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>colorado_runs <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>][<span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs<span class="sc">:.2f}</span><span class="ss"> runs/game"</span>, </span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>            xy<span class="op">=</span>(colorado_runs, colorado_index <span class="op">+</span> <span class="fl">19.8</span>), </span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            xytext<span class="op">=</span>(colorado_runs <span class="op">+</span> <span class="fl">0.5</span>, colorado_index <span class="op">+</span> <span class="fl">19.8</span>),</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Set x-axis to start from 0 for better comparison</span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="bu">max</span>(avgDF_2010_sorted.totalRuns) <span class="op">*</span> <span class="fl">1.1</span>)</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Add grid for easier reading</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summary statistics</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Summary Statistics for 2010:"</span>)</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado (COL) average runs per game: </span><span class="sc">{</span>colorado_runs<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"League average runs per game: </span><span class="sc">{</span>avgDF_2010_sorted<span class="sc">.</span>totalRuns<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado is </span><span class="sc">{</span>((colorado_runs <span class="op">/</span> avgDF_2010_sorted.totalRuns.mean()) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% above league average"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1603e413" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 4: Formatting for Your Audience</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a professional, publication-ready visualization</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set style for professional appearance</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the main visualization</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create color array for highlighting Colorado</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>colorado_colors <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create horizontal bar chart</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Add title and labels</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Colorado (COL) is the Most Run-Friendly Ballpark in 2010"</span>, </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>colorado_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, label<span class="op">=</span><span class="st">"Colorado Rockies"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>other_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"lightgrey"</span>, label<span class="op">=</span><span class="st">"Other Stadiums"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[colorado_bar, other_bar], loc<span class="op">=</span><span class="st">'lower right'</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Add annotation for Colorado</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>colorado_index <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>].index[<span class="dv">0</span>]</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>colorado_runs <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>][<span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs<span class="sc">:.2f}</span><span class="ss"> runs/game"</span>, </span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>            xy<span class="op">=</span>(colorado_runs, colorado_index), </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>            xytext<span class="op">=</span>(colorado_runs <span class="op">+</span> <span class="fl">0.5</span>, colorado_index),</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Set x-axis to start from 0 for better comparison</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="bu">max</span>(avgDF_2010_sorted.totalRuns) <span class="op">*</span> <span class="fl">1.1</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Add grid for easier reading</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summary statistics</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Summary Statistics for 2010:"</span>)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado (COL) average runs per game: </span><span class="sc">{</span>colorado_runs<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"League average runs per game: </span><span class="sc">{</span>avgDF_2010_sorted<span class="sc">.</span>totalRuns<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado is </span><span class="sc">{</span>((colorado_runs <span class="op">/</span> avgDF_2010_sorted.totalRuns.mean()) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% above league average"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/stage-4-formatting-output-1.png" id="stage-4-formatting" width="758" height="567" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-7-output-1.png" width="758" height="567" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -488,23 +537,92 @@ Colorado is 20.8% above league average</code></pre>
 <li>The annotation on the visualization is helpful because it provides the average runs per game for Colorado.</li>
 <li>The annotation can be fixed by moving it to the above for xy and xytext parameters of the annotation. As shown in the code above I have added 19.8 to the y-axis index to move the annotation above the bar.</li>
 </ul>
+<p>** Fixing the Annotation Placement:** - The annotation can be fixed by moving it to the above for xy and xytext parameters of the annotation. As shown in the code below I have added 19.8 to the y-axis index to move the annotation above the bar.</p>
+<div id="abc11861" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixing the annotation placement</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stage-4-formatting</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 4: Formatting for Your Audience</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a professional, publication-ready visualization</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set style for professional appearance</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the main visualization</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create color array for highlighting Colorado</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>colorado_colors <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create horizontal bar chart</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add title and labels</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Colorado (COL) is the Most Run-Friendly Ballpark in 2010"</span>, </span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>colorado_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, label<span class="op">=</span><span class="st">"Colorado Rockies"</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>other_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"lightgrey"</span>, label<span class="op">=</span><span class="st">"Other Stadiums"</span>)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[colorado_bar, other_bar], loc<span class="op">=</span><span class="st">'lower right'</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Add annotation for Colorado</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>colorado_index <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>].index[<span class="dv">0</span>]</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>colorado_runs <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>][<span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs<span class="sc">:.2f}</span><span class="ss"> runs/game"</span>, </span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>            xy<span class="op">=</span>(colorado_runs, colorado_index <span class="op">+</span> <span class="fl">19.8</span>), </span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>            xytext<span class="op">=</span>(colorado_runs <span class="op">+</span> <span class="fl">0.5</span>, colorado_index <span class="op">+</span> <span class="fl">19.8</span>),</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Set x-axis to start from 0 for better comparison</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="bu">max</span>(avgDF_2010_sorted.totalRuns) <span class="op">*</span> <span class="fl">1.1</span>)</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Add grid for easier reading</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summary statistics</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"\nSummary Statistics for 2010:")</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"Colorado (COL) average runs per game: {colorado_runs:.2f}")</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"League average runs per game: {avgDF_2010_sorted.totalRuns.mean():.2f}")</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"Colorado is {((colorado_runs / avgDF_2010_sorted.totalRuns.mean()) - 1) * 100:.1f}% above league average")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" width="758" height="567" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>The annotation is now placed in a better location.</li>
+<li>It is helpful because it allows us to see that Colorado is the most run-friendly stadium in Major League Baseball.</li>
+</ul>
 </section>
 <section id="advanced-object-oriented-techniques" class="level2">
 <h2 class="anchored" data-anchor-id="advanced-object-oriented-techniques">Advanced Object-Oriented Techniques</h2>
 <p><strong>Mental Model:</strong> Use object-oriented matplotlib to create complex, reusable visualizations.</p>
 <p>Let’s create a comprehensive comparison between 2010 and 2021:</p>
-<div id="advanced-oo-techniques" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Advanced Object-Oriented Techniques</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a comprehensive comparison visualization</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for comparison</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>comparison_data <span class="op">=</span> pd.merge(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    avgDF_2010[[<span class="st">'home'</span>, <span class="st">'totalRuns'</span>]].rename(columns<span class="op">=</span>{<span class="st">'totalRuns'</span>: <span class="st">'runs_2010'</span>}),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    avgDF_2021[[<span class="st">'home'</span>, <span class="st">'totalRuns'</span>]].rename(columns<span class="op">=</span>{<span class="st">'totalRuns'</span>: <span class="st">'runs_2021'</span>}),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">'home'</span>, how<span class="op">=</span><span class="st">'inner'</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Create the visualization</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="advanced-oo-techniques" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Advanced Object-Oriented Techniques</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a comprehensive comparison visualization</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for comparison</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>comparison_data <span class="op">=</span> pd.merge(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    avgDF_2010[[<span class="st">'home'</span>, <span class="st">'totalRuns'</span>]].rename(columns<span class="op">=</span>{<span class="st">'totalRuns'</span>: <span class="st">'runs_2010'</span>}),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    avgDF_2021[[<span class="st">'home'</span>, <span class="st">'totalRuns'</span>]].rename(columns<span class="op">=</span>{<span class="st">'totalRuns'</span>: <span class="st">'runs_2021'</span>}),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">'home'</span>, how<span class="op">=</span><span class="st">'inner'</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Create the visualization</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -522,88 +640,102 @@ Colorado is 20.8% above league average</code></pre>
 </div>
 <p><strong>Answer: Question 1: Using Subplot Layout</strong> - The two-facet visualization is created below to show the total runs for 2010 and 2021 for each stadium in a single figure. Colorado is highlighted in the visualization.</p>
 <p><strong>Answer:</strong></p>
-<div id="cell-two-facet-visualization" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Advanced Object-Oriented Techniques: Two-Facet Visualization</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a comparison between 2010 and 2021 stadium performance</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort both datasets by total runs for consistent ordering</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>avgDF_2010_sorted <span class="op">=</span> avgDF_2010.sort_values(<span class="st">'totalRuns'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>avgDF_2021_sorted <span class="op">=</span> avgDF_2021.sort_values(<span class="st">'totalRuns'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure with two subplots side by side</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define colors for highlighting Colorado</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>colorado_colors_2010 <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                       <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>colorado_colors_2021 <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                       <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2021_sorted.home]</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create horizontal bar charts for both years</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>bars1 <span class="op">=</span> ax1.barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors_2010)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> ax2.barh(avgDF_2021_sorted.home, avgDF_2021_sorted.totalRuns, color<span class="op">=</span>colorado_colors_2021)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add titles and labels for both subplots</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"2010 Stadium Performance"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"2021 Stadium Performance"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Add main title for the entire figure</span></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Colorado Rockies Stadium Performance: 2010 vs 2021"</span>, </span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">1.02</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>colorado_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, label<span class="op">=</span><span class="st">"Colorado Rockies"</span>)</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>other_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"lightgrey"</span>, label<span class="op">=</span><span class="st">"Other Stadiums"</span>)</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>fig.legend(handles<span class="op">=</span>[colorado_bar, other_bar], loc<span class="op">=</span><span class="st">'lower center'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">8</span>, ncol<span class="op">=</span><span class="dv">2</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.05</span>))</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Add annotations for Colorado in both years</span></span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 2010 annotation</span></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>colorado_index_2010 <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>].index[<span class="dv">0</span>]</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>colorado_runs_2010 <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>][<span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>ax1.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs_2010<span class="sc">:.2f}</span><span class="ss">"</span>, </span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(colorado_runs_2010, colorado_index_2010 <span class="op">+</span> <span class="dv">20</span>), </span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(colorado_runs_2010 <span class="op">+</span> <span class="dv">2</span>, colorado_index_2010 <span class="op">+</span> <span class="fl">19.8</span>),</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="co"># 2021 annotation</span></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>colorado_index_2021 <span class="op">=</span> avgDF_2021_sorted[avgDF_2021_sorted.home <span class="op">==</span> <span class="st">"COL"</span>].index[<span class="dv">0</span>]</span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>colorado_runs_2021 <span class="op">=</span> avgDF_2021_sorted[avgDF_2021_sorted.home <span class="op">==</span> <span class="st">"COL"</span>][<span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>ax2.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs_2021<span class="sc">:.2f}</span><span class="ss">"</span>, </span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(colorado_runs_2021, colorado_index_2021 <span class="op">+</span> <span class="dv">18</span>), </span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(colorado_runs_2021 <span class="op">+</span> <span class="dv">2</span>, colorado_index_2021 <span class="op">+</span> <span class="fl">17.8</span>),</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Set consistent x-axis limits for both subplots</span></span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>max_runs <span class="op">=</span> <span class="bu">max</span>(<span class="bu">max</span>(avgDF_2010_sorted.totalRuns), <span class="bu">max</span>(avgDF_2021_sorted.totalRuns))</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, max_runs <span class="op">*</span> <span class="fl">1.1</span>)</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, max_runs <span class="op">*</span> <span class="fl">1.1</span>)</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Add grids for easier reading</span></span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>ax2.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust layout to prevent overlap</span></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(top<span class="op">=</span><span class="fl">0.9</span>)  <span class="co"># Make room for main title</span></span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Print comparison statistics</span></span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Colorado Rockies Stadium Performance Comparison:"</span>)</span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2010: </span><span class="sc">{</span>colorado_runs_2010<span class="sc">:.2f}</span><span class="ss"> runs per game"</span>)</span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2021: </span><span class="sc">{</span>colorado_runs_2021<span class="sc">:.2f}</span><span class="ss"> runs per game"</span>)</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Change: </span><span class="sc">{</span>colorado_runs_2021 <span class="op">-</span> colorado_runs_2010<span class="sc">:+.2f}</span><span class="ss"> runs per game"</span>)</span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage change: </span><span class="sc">{</span>((colorado_runs_2021 <span class="op">/</span> colorado_runs_2010) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:+.1f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-two-facet-visualization" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Advanced Object-Oriented Techniques: Two-Facet Visualization</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a comparison between 2010 and 2021 stadium performance</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort both datasets by total runs for consistent ordering</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>avgDF_2010_sorted <span class="op">=</span> avgDF_2010.sort_values(<span class="st">'totalRuns'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>avgDF_2021_sorted <span class="op">=</span> avgDF_2021.sort_values(<span class="st">'totalRuns'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure with two subplots side by side</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define colors for highlighting Colorado</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>colorado_colors_2010 <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                       <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>colorado_colors_2021 <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                       <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2021_sorted.home]</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create horizontal bar charts for both years</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>bars1 <span class="op">=</span> ax1.barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors_2010)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> ax2.barh(avgDF_2021_sorted.home, avgDF_2021_sorted.totalRuns, color<span class="op">=</span>colorado_colors_2021)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add titles and labels for both subplots</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"2010 Stadium Performance"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">"2021 Stadium Performance"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Add main title for the entire figure</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"Colorado Rockies Stadium Performance: 2010 vs 2021"</span>, </span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">1.02</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co"># # Get Colorado values for statistics </span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co"># colorado_runs_2010 = avgDF_2010_sorted[avgDF_2010_sorted.home == "COL"]["runs_2010"].iloc[0]</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co"># colorado_runs_2021 = avgDF_2021_sorted[avgDF_2021_sorted.home == "COL"]["runs_2021"].iloc[0]             </span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>colorado_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, label<span class="op">=</span><span class="st">"Colorado Rockies"</span>)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>other_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"lightgrey"</span>, label<span class="op">=</span><span class="st">"Other Stadiums"</span>)</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>fig.legend(handles<span class="op">=</span>[colorado_bar, other_bar], loc<span class="op">=</span><span class="st">'lower center'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">8</span>, ncol<span class="op">=</span><span class="dv">2</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.05</span>))</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Add annotations for Colorado in both years</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 2010 annotation</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>colorado_index_2010 <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>].index[<span class="dv">0</span>]</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>colorado_runs_2010 <span class="op">=</span> avgDF_2010_sorted[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>][<span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>ax1.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs_2010<span class="sc">:.2f}</span><span class="ss">"</span>, </span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(colorado_runs_2010, colorado_index_2010 <span class="op">+</span> <span class="dv">20</span>), </span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(colorado_runs_2010 <span class="op">+</span> <span class="dv">2</span>, colorado_index_2010 <span class="op">+</span> <span class="fl">19.8</span>),</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="co"># 2021 annotation</span></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>colorado_index_2021 <span class="op">=</span> avgDF_2021_sorted[avgDF_2021_sorted.home <span class="op">==</span> <span class="st">"COL"</span>].index[<span class="dv">0</span>]</span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>colorado_runs_2021 <span class="op">=</span> avgDF_2021_sorted[avgDF_2021_sorted.home <span class="op">==</span> <span class="st">"COL"</span>][<span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>ax2.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs_2021<span class="sc">:.2f}</span><span class="ss">"</span>, </span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>             xy<span class="op">=</span>(colorado_runs_2021, colorado_index_2021 <span class="op">+</span> <span class="dv">18</span>), </span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>             xytext<span class="op">=</span>(colorado_runs_2021 <span class="op">+</span> <span class="dv">2</span>, colorado_index_2021 <span class="op">+</span> <span class="fl">17.8</span>),</span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>             arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Set consistent x-axis limits for both subplots</span></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>max_runs <span class="op">=</span> <span class="bu">max</span>(<span class="bu">max</span>(avgDF_2010_sorted.totalRuns), <span class="bu">max</span>(avgDF_2021_sorted.totalRuns))</span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, max_runs <span class="op">*</span> <span class="fl">1.1</span>)</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, max_runs <span class="op">*</span> <span class="fl">1.1</span>)</span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Add grids for easier reading</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>ax2.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust layout to prevent overlap</span></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(top<span class="op">=</span><span class="fl">0.9</span>)  <span class="co"># Make room for main title</span></span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Print comparison statistics</span></span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Colorado Rockies Stadium Performance Comparison:"</span>)</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2010: </span><span class="sc">{</span>colorado_runs_2010<span class="sc">:.2f}</span><span class="ss"> runs per game"</span>)</span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2021: </span><span class="sc">{</span>colorado_runs_2021<span class="sc">:.2f}</span><span class="ss"> runs per game"</span>)</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Change: </span><span class="sc">{</span>colorado_runs_2021 <span class="op">-</span> colorado_runs_2010<span class="sc">:+.2f}</span><span class="ss"> runs per game"</span>)</span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage change: </span><span class="sc">{</span>((colorado_runs_2021 <span class="op">/</span> colorado_runs_2010) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:+.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">League Averages:"</span>)</span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2010 League Average: </span><span class="sc">{</span>avgDF_2010_sorted<span class="sc">.</span>totalRuns<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> runs/game"</span>)</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2021 League Average: </span><span class="sc">{</span>avgDF_2021_sorted<span class="sc">.</span>totalRuns<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> runs/game"</span>)</span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Colorado vs League Average:"</span>)</span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2010: </span><span class="sc">{</span>colorado_runs_2010 <span class="op">-</span> avgDF_2010_sorted<span class="sc">.</span>totalRuns<span class="sc">.</span>mean()<span class="sc">:+.2f}</span><span class="ss"> runs/game above league average"</span>)</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"2021: </span><span class="sc">{</span>colorado_runs_2021 <span class="op">-</span> avgDF_2021_sorted<span class="sc">.</span>totalRuns<span class="sc">.</span>mean()<span class="sc">:+.2f}</span><span class="ss"> runs/game above league average"</span>)</span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Colorado vs League Average Percentage Change:"</span>)</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado is </span><span class="sc">{</span>((colorado_runs_2021 <span class="op">/</span> avgDF_2010_sorted.totalRuns.mean()) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% above league average in 2021"</span>)</span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado is </span><span class="sc">{</span>((colorado_runs_2010 <span class="op">/</span> avgDF_2010_sorted.totalRuns.mean()) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% above league average in 2010"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/two-facet-visualization-output-1.png" id="two-facet-visualization" width="754" height="630" class="figure-img"></p>
+<p><img src="index_files/figure-html/two-facet-visualization-output-1.png" id="two-facet-visualization" width="754" height="527" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -613,12 +745,51 @@ Colorado Rockies Stadium Performance Comparison:
 2010: 10.59 runs per game
 2021: 10.65 runs per game
 Change: +0.06 runs per game
-Percentage change: +0.6%</code></pre>
+Percentage change: +0.6%
+
+League Averages:
+2010 League Average: 8.77 runs/game
+2021 League Average: 9.06 runs/game
+
+Colorado vs League Average:
+2010: +1.82 runs/game above league average
+2021: +1.59 runs/game above league average
+
+Colorado vs League Average Percentage Change:
+Colorado is 21.5% above league average in 2021
+Colorado is 20.8% above league average in 2010</code></pre>
 </div>
 </div>
 <p><strong>Answer: Question 2: Explanation of the Visualization</strong></p>
-<p>The two-facet visualization effectively demonstrates Colorado’s unique stadium effect across both 2010 and 2021 seasons. The side-by-side comparison reveals that Colorado (COL) consistently ranks among the highest-scoring ballparks in both years, with the purple highlighting making it immediately identifiable. The horizontal bar charts allow for easy comparison of average runs per game across all stadiums, while the annotations provide precise numerical values for Colorado’s performance. The consistent x-axis scaling ensures fair comparison between years, and the professional formatting with clear titles, legends, and color coding makes the visualization suitable for business presentations.</p>
-<p><strong>Does AI come to the right conclusion?</strong> Yes, in my case the AI correctly identifies that Colorado is indeed one of the most run-friendly ballparks in Major League Baseball.</p>
+<p><strong>Summary of the Visualization:</strong></p>
+<ul>
+<li>Colorado’s dominant run-friendliness is revealed across 2010 and 2021 seasons</li>
+<li>Coors Field consistently leads all MLB stadiums in average runs per game, which confirms the altitude advantage makes it the most hitter-friendly ballpark in baseball</li>
+<li>Visualization ranks every stadium by total runs, showing the entire league’s spectrum, which extends from highest-scoring environments (Colorado) to most pitcher-friendly parks</li>
+<li>By tracking both years, we can identify which teams’ home parks rank closest to Colorado (high-run environments) versus those furthest away (low-run, pitcher-friendly parks).</li>
+<li>The gap between Colorado and league average reveals the magnitude of Coors Field’s scoring advantage, while the overall distribution shows how teams are distributed across the scoring spectrum</li>
+<li>This comparison across 2010 vs 2021 helps reveal era effects, rule changes, and competitive balance shifts that impact league-wide run rates over time.</li>
+</ul>
+<p><strong>Notable Stadium Comparisons:</strong></p>
+<ul>
+<li><strong>Camden Yards (Orioles):</strong>
+<ul>
+<li>Known as one of baseball’s most influential modern ballparks</li>
+<li>Typically ranks near the middle of the run-friendliness spectrum</li>
+<li>Dimensions and design create relatively neutral environment for scoring</li>
+<li>Interesting benchmark to evaluate whether Colorado is truly exceptional vs.&nbsp;simply above-average</li>
+</ul></li>
+<li><strong>Fenway Park (Red Sox):</strong>
+<ul>
+<li>One of baseball’s most iconic venues</li>
+<li>Unusual dimensions and Green Monster create unique scoring profile</li>
+<li>Located near bottom of run-friendliness rankings (pitcher-friendly park)</li>
+<li>Provides sharp contrast to Colorado’s high-run environment</li>
+<li>Illustrates dramatic range of scoring environments across MLB stadiums</li>
+</ul></li>
+</ul>
+<p><strong>Does AI come to the right conclusion?</strong></p>
+<p>Initially, the AI explained about plot and more of technical plot explantion than games and stadium aspects, but after a few iterations, the AI correctly identifies Colorado as one of the most run-friendly ballparks in MLB and provides a clear explanation of the visualization. AI initially did not come to the right conclusion because it did not understand the data and the visualization.</p>
 </section>
 <section id="student-analysis-section" class="level2">
 <h2 class="anchored" data-anchor-id="student-analysis-section">Student Analysis Section: Mastering Object-Oriented Matplotlib</h2>
