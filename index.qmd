@@ -483,7 +483,7 @@ avgDF_2010_sorted = avgDF_2010.sort_values('totalRuns', ascending=True)
 avgDF_2021_sorted = avgDF_2021.sort_values('totalRuns', ascending=True)
 
 # Create figure with two subplots side by side
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 6))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8.5, 7))
 
 # Define colors for highlighting Colorado
 colorado_colors_2010 = ["darkorchid" if stadium == "COL" else "lightgrey" 
@@ -521,7 +521,7 @@ colorado_index_2010 = avgDF_2010_sorted[avgDF_2010_sorted.home == "COL"].index[0
 colorado_runs_2010 = avgDF_2010_sorted[avgDF_2010_sorted.home == "COL"]["totalRuns"].iloc[0]
 ax1.annotate(f"COL: {colorado_runs_2010:.2f}", 
              xy=(colorado_runs_2010, colorado_index_2010 + 20), 
-             xytext=(colorado_runs_2010 - 0.7, colorado_index_2010 + 15),
+             xytext=(colorado_runs_2010 - 0.8, colorado_index_2010 + 15),
              arrowprops=dict(arrowstyle='->', color='darkorchid', lw=2),
              fontsize=10, fontweight='bold', color='darkorchid')
 
@@ -530,7 +530,7 @@ colorado_index_2021 = avgDF_2021_sorted[avgDF_2021_sorted.home == "COL"].index[0
 colorado_runs_2021 = avgDF_2021_sorted[avgDF_2021_sorted.home == "COL"]["totalRuns"].iloc[0]
 ax2.annotate(f"COL: {colorado_runs_2021:.2f}", 
              xy=(colorado_runs_2021, colorado_index_2021 + 18), 
-             xytext=(colorado_runs_2021, colorado_index_2021 + 15),
+             xytext=(colorado_runs_2021 - 0.5, colorado_index_2021 + 15),
              arrowprops=dict(arrowstyle='->', color='darkorchid', lw=2),
              fontsize=10, fontweight='bold', color='darkorchid')
 
