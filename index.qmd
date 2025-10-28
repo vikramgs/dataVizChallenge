@@ -483,7 +483,7 @@ avgDF_2010_sorted = avgDF_2010.sort_values('totalRuns', ascending=True)
 avgDF_2021_sorted = avgDF_2021.sort_values('totalRuns', ascending=True)
 
 # Create figure with two subplots side by side
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8.5, 8))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 7))
 
 # Define colors for highlighting Colorado
 colorado_colors_2010 = ["darkorchid" if stadium == "COL" else "lightgrey" 
